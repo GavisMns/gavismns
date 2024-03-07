@@ -1,0 +1,146 @@
+<html>
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+  <style>
+    
+    body {
+        background-image: url("media83/cropped.jpeg");
+    }
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #button {
+      width: 200px;
+      height: 50px;
+      font-size: 35px;
+      font-family: "Dancing Script", cursive;
+         font-optical-sizing: auto;
+        font-weight: 700;
+        font-style: normal;
+      background-color: pink;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    #form {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #video {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    h1 {
+        text-align: center;
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+    h2 {
+        font-family: "Anton", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        background-color: coral;
+        text-align: center;
+        padding: 10px;
+
+            border-style: double;
+            color: honeydew;
+    }
+
+  </style>
+</head>
+<body>
+    <h1>Trang web viết bởi:</h1>
+    <h2>NGUYỄN VĂN ĐẠI</h2>
+  <div id="container">
+    <button id="button">Đăng ký</button>
+    <form id="form">
+      <label for="date">Nhập ngày/tháng/năm:</label>
+      <input type="date" id="date" name="date">
+      <input type="submit" value="Xác nhận">
+    </form>
+    <video id="video" src="media83/vid.mp4" controls></video>
+  </div>
+  <script>
+    // Lấy các phần tử từ html
+    const button = document.getElementById("button");
+    const form = document.getElementById("form");
+    const date = document.getElementById("date");
+    const video = document.getElementById("video");
+
+    // Hàm kiểm tra ngày nhập vào có phải là ngày 8/3/2024 hay không
+    function checkDate(input) {
+      const inputDate = new Date(input);
+      const targetDate = new Date(2024, 2, 8); // Tháng 2 là tháng 3 vì tháng bắt đầu từ 0
+      return inputDate.getTime() === targetDate.getTime();
+    }
+
+    // Hàm kiểm tra thiết bị có phải là điện thoại hay không
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    }
+
+    // Hàm hiển thị video và ẩn các phần tử khác
+    function showVideo() {
+      button.style.display = "none";
+      form.style.display = "none";
+      video.style.display = "block";
+    }
+
+    // Hàm xử lý sự kiện khi nhấn vào nút đăng ký
+    function handleButtonClick() {
+      button.style.display = "none";
+      form.style.display = "block";
+    }
+
+    // Hàm kiểm tra ngày nhập vào có phải là ngày hợp lệ hay không
+function checkDate(input) {
+  const inputDate = new Date(input);
+  return !isNaN(inputDate.getTime()); // Trả về true nếu ngày nhập vào là ngày hợp lệ, false nếu không
+}
+
+// Hàm xử lý sự kiện khi gửi form
+function handleFormSubmit(event) {
+  event.preventDefault(); // Ngăn chặn hành vi mặc định của form
+  const input = date.value; // Lấy giá trị nhập vào từ ô date
+  if (checkDate(input)) { // Nếu ngày nhập vào là ngày hợp lệ
+    if (isMobile()) { // Nếu thiết bị là điện thoại
+      if (window.matchMedia("(orientation: landscape)").matches) { // Nếu màn hình đã quay ngang
+        showVideo(); // Hiển thị video
+      } else { // Nếu màn hình chưa quay ngang
+        alert("Vui lòng quay ngang màn hình để xem video"); // Thông báo yêu cầu quay ngang màn hình
+        window.addEventListener("orientationchange", function() { // Lắng nghe sự kiện thay đổi hướng màn hình
+          if (window.matchMedia("(orientation: landscape)").matches) { // Nếu màn hình đã quay ngang
+            showVideo(); // Hiển thị video
+          }
+        });
+      }
+    } else { // Nếu thiết bị không phải là điện thoại
+      showVideo(); // Hiển thị video
+    }
+  } else { // Nếu ngày nhập vào không phải là ngày hợp lệ
+    alert("Ngày bạn nhập vào không hợp lệ. Vui lòng nhập lại"); // Thông báo lỗi
+    date.value = ""; // Xóa giá trị nhập vào
+  }
+}
+
+    // Đăng ký các sự kiện cho nút và form
+    button.addEventListener("click", handleButtonClick);
+    form.addEventListener("submit", handleFormSubmit);
+  </script>
+</body>
+</html>
